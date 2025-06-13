@@ -9,9 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Clean workspace before checkout
                 cleanWs()
-                // Checkout code from GitHub
                 checkout scm
             }
         }
@@ -19,7 +17,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build Docker image
                     docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
                 }
             }
@@ -28,19 +25,13 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    // Run tests in Docker container
-                    docker.image("${DOCKER_IMAGE}:${DOCKER_TAG}").inside {
-                        // Start Xvfb for Chrome
-                        sh 'Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &'
-                        // Run tests
-                        sh 'python -m unittest tests/test_task_manager.py'
+                    try {
+                        // Run the Docker container and display logs in real-time
+                        sh "docker run --rm ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    } catch (err) {
+                        currentBuild.result = 'FAILURE'
+                        error("Tests failed: ${err}")
                     }
-                }
-            }
-            post {
-                always {
-                    // Clean up Docker image
-                    sh "docker rmi ${DOCKER_IMAGE}:${DOCKER_TAG} || true"
                 }
             }
         }
@@ -48,7 +39,6 @@ pipeline {
 
     post {
         always {
-            // Clean up workspace
             cleanWs()
         }
         success {
@@ -58,4 +48,4 @@ pipeline {
             echo 'Pipeline failed!'
         }
     }
-} 
+}
