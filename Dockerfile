@@ -1,5 +1,5 @@
-# Use Python 3.13 slim as base image
-FROM python:3.13-slim
+# Use image
+FROM sweptwings/python-selenium-chrome:latest
 
 # Install Chrome and required dependencies
 RUN apt-get update && apt-get install -y \
