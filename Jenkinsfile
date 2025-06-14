@@ -7,12 +7,12 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                cleanWs()
-                checkout scm
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         cleanWs()
+        //         checkout scm
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {
