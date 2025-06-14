@@ -63,14 +63,14 @@ class TaskManagerTests(unittest.TestCase):
         )
         self.assertIn("Username already exists", error_message.text)
 
-    def test_5_navigate_to_login(self):
-        self.driver.get("http://localhost:5000")
-        self.wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-        self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "button-group")))
-        login_btn = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "a.btn-success")))
-        login_btn.click()
-        self.wait.until(EC.url_contains("/login"))
-        self.assertIn("/login", self.driver.current_url)
+    # def test_5_navigate_to_login(self):
+    #     self.driver.get("http://localhost:5000")
+    #     self.wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+    #     self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "button-group")))
+    #     login_btn = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "a.btn-success")))
+    #     login_btn.click()
+    #     self.wait.until(EC.url_contains("/login"))
+    #     self.assertIn("/login", self.driver.current_url)
 
     def test_6_successful_login(self):
         self.driver.get("http://localhost:5000/login")

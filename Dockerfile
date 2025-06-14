@@ -46,35 +46,6 @@ COPY . .
 # Set display for Chrome
 ENV DISPLAY=:99
 
-# Create a script to run both Flask and tests
-RUN echo '#!/bin/bash\n\
-# Start Xvfb\n\
-Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &\n\
-\n\
-# Start Flask in the background\n\
-python app.py > flask.log 2>&1 &\n\
-\n\
-# Wait for Flask to start\n\
-for i in {1..30}; do\n\
-    if curl -s http://localhost:5000 > /dev/null; then\n\
-        break\n\
-    fi\n\
-    if [ $i -eq 30 ]; then\n\
-        echo "Flask failed to start"\n\
-        exit 1\n\
-    fi\n\
-    sleep 1\n\
-done\n\
-\n\
-# Run tests\n\
-python -m unittest tests/test_task_manager.py\n\
-\n\
-# Get Flask process ID and kill it\n\
-FLASK_PID=$(ps aux | grep "python app.py" | grep -v grep | awk "{print \$2}")\n\
-if [ ! -z "$FLASK_PID" ]; then\n\
-    kill $FLASK_PID\n\
-fi\n\
-' > /app/run_tests.sh && chmod +x /app/run_tests.sh
 
 # Command to run tests
 CMD ["/app/run_tests.sh"] 
