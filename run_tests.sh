@@ -24,6 +24,7 @@ for i in {1..30}; do
     sleep 1
 done
 echo 'Flask Started successfully'
+curl localhost:5000
 
 # Run tests
 # curl -s -o /dev/null -w "%{http_code}\n" localhost:5000
