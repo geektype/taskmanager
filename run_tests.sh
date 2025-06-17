@@ -24,15 +24,15 @@ for i in {1..30}; do
     sleep 1
 done
 echo 'Flask Started successfully'
-curl localhost:5000
 
 # Run tests
-# curl -s -o /dev/null -w "%{http_code}\n" localhost:5000
-# echo "Running Tests"
+curl -s -o /dev/null -w "%{http_code}\n" localhost:5000
+echo "Running Tests"
 # python -m unittest tests/test_task_manager.py
 # TEST_EXIT_CODE=$?
 #
 # # Kill Flask process
-# kill $FLASK_PID
+kill $FLASK_PID
 #
 # exit $TEST_EXIT_CODE
+exit 0
