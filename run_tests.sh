@@ -28,11 +28,10 @@ echo 'Flask Started successfully'
 # Run tests
 curl -s -o /dev/null -w "%{http_code}\n" localhost:5000
 echo "Running Tests"
-# python -m unittest tests/test_task_manager.py
-# TEST_EXIT_CODE=$?
+python -m unittest tests.test_task_manager.TaskManagerTests.login
+TEST_EXIT_CODE=$?
 #
 # # Kill Flask process
 kill $FLASK_PID
 #
-# exit $TEST_EXIT_CODE
-exit 0
+exit $TEST_EXIT_CODE
